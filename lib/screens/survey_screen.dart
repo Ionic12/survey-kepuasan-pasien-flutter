@@ -229,8 +229,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                             final bool isTablet = constraints.maxWidth > 500;
                             final bool isDesktop = constraints.maxWidth > 1000;
 
-                            // Calculate item width based on screen size
-                            // Mobile: 2 columns, Desktop: 4 columns
+                            // 1 Row (4 Columns) on Desktop, 2x2 on Mobile/Tablet
                             final double padding = isTablet ? 80 : 40;
                             final double availableWidth =
                                 constraints.maxWidth - padding;
@@ -268,33 +267,16 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                             SizedBox(
                                               width: itemWidth,
                                               child: EmojiButton(
-                                                rating:
-                                                    RatingLevel.sangatSesuai,
+                                                rating: RatingLevel.tidakSesuai,
                                                 isSelected:
                                                     _questions[index]
                                                         .selectedRating ==
                                                     RatingLevel
-                                                        .sangatSesuai
+                                                        .tidakSesuai
                                                         .value,
                                                 onTap: () => _selectRating(
                                                   index,
-                                                  RatingLevel
-                                                      .sangatSesuai
-                                                      .value,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: itemWidth,
-                                              child: EmojiButton(
-                                                rating: RatingLevel.sesuai,
-                                                isSelected:
-                                                    _questions[index]
-                                                        .selectedRating ==
-                                                    RatingLevel.sesuai.value,
-                                                onTap: () => _selectRating(
-                                                  index,
-                                                  RatingLevel.sesuai.value,
+                                                  RatingLevel.tidakSesuai.value,
                                                 ),
                                               ),
                                             ),
@@ -320,16 +302,33 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                             SizedBox(
                                               width: itemWidth,
                                               child: EmojiButton(
-                                                rating: RatingLevel.tidakSesuai,
+                                                rating: RatingLevel.sesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel.sesuai.value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel.sesuai.value,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: itemWidth,
+                                              child: EmojiButton(
+                                                rating:
+                                                    RatingLevel.sangatSesuai,
                                                 isSelected:
                                                     _questions[index]
                                                         .selectedRating ==
                                                     RatingLevel
-                                                        .tidakSesuai
+                                                        .sangatSesuai
                                                         .value,
                                                 onTap: () => _selectRating(
                                                   index,
-                                                  RatingLevel.tidakSesuai.value,
+                                                  RatingLevel
+                                                      .sangatSesuai
+                                                      .value,
                                                 ),
                                               ),
                                             ),
