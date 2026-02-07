@@ -33,8 +33,9 @@ class EmojiButton extends StatelessWidget {
         // Calculate dynamic sizes based on available width
         // On mobile, width is typically ~150-180. On tablets, it could be larger.
         final double availableWidth = constraints.maxWidth;
-        final double emojiSize = (availableWidth * 0.45).clamp(40.0, 90.0);
-        final double fontSize = (availableWidth * 0.12).clamp(12.0, 20.0);
+        // Increased sizes significantly for user request
+        final double emojiSize = (availableWidth * 0.5).clamp(80.0, 160.0);
+        final double fontSize = (availableWidth * 0.15).clamp(18.0, 34.0);
 
         return GestureDetector(
           onTap: onTap,

@@ -181,16 +181,16 @@ class MainMenuScreen extends StatelessWidget {
           child: Icon(
             Icons.local_hospital,
             color: Colors.white,
-            size: isWide ? 150 : (isTablet ? 120 : 80),
+            size: isWide ? 100 : (isTablet ? 90 : 70),
           ),
         ),
-        SizedBox(height: isWide ? 40 : (isTablet ? 40 : 24)),
+        SizedBox(height: isWide ? 24 : (isTablet ? 24 : 16)),
         Text(
           'KLINIK NOVI MAHARANI',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
-            fontSize: isWide ? 60 : (isTablet ? 48 : 38),
+            fontSize: isWide ? 44 : (isTablet ? 36 : 28),
             fontWeight: FontWeight.w900,
             letterSpacing: 2.0,
             shadows: [
@@ -214,7 +214,7 @@ class MainMenuScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white.withOpacity(0.9),
-              fontSize: isWide ? 22 : (isTablet ? 18 : 14),
+              fontSize: isWide ? 18 : (isTablet ? 16 : 14),
               fontWeight: FontWeight.w500,
             ),
           ),

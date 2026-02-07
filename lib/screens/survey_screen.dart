@@ -172,45 +172,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                     ),
                   ),
 
-                  // Progress indicator
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: isTablet ? 120 : 50,
-                    ),
-                    child: RepaintBoundary(
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: const Color(0xFF00897B).withOpacity(0.1),
-                            width: 1,
-                          ),
-                        ),
-                        child: Row(
-                          children: List.generate(
-                            _questions.length,
-                            (index) => Expanded(
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                height: 6,
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: index <= _currentPage
-                                      ? const Color(0xFF00897B)
-                                      : Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(3),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 20),
 
                   Expanded(
                     child: PageView.builder(
@@ -226,16 +188,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
                       itemBuilder: (context, index) {
                         return LayoutBuilder(
                           builder: (context, constraints) {
-                            final bool isTablet = constraints.maxWidth > 400;
-                            final bool isDesktop = constraints.maxWidth > 700;
-
-                            // 1 Row (4 Columns) on Desktop (>700), 2x2 on Mobile/Small Tablet
-                            final double padding = isTablet ? 60 : 30;
-                            final double availableWidth =
-                                constraints.maxWidth - padding;
-                            final int columns = isDesktop ? 4 : 2;
-                            final double itemWidth =
-                                (availableWidth / columns) - 12;
+                            final bool isTablet = constraints.maxWidth > 450;
+                            final bool isDesktop = constraints.maxWidth > 750;
 
                             return Center(
                               child: SingleChildScrollView(
@@ -257,16 +211,19 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                       const SizedBox(height: 32),
                                       ConstrainedBox(
                                         constraints: BoxConstraints(
-                                          maxWidth: isDesktop ? 1000 : 700,
+                                          maxWidth: isDesktop
+                                              ? 1200
+                                              : double.infinity,
                                         ),
-                                        child: Wrap(
-                                          alignment: WrapAlignment.center,
-                                          spacing: 16,
-                                          runSpacing: 16,
-                                          children: [
-                                            SizedBox(
-                                              width: itemWidth,
-                                              child: EmojiButton(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              EmojiButton(
                                                 rating: RatingLevel.tidakSesuai,
                                                 isSelected:
                                                     _questions[index]
@@ -279,10 +236,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                                   RatingLevel.tidakSesuai.value,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: itemWidth,
-                                              child: EmojiButton(
+                                              const SizedBox(width: 16),
+                                              EmojiButton(
                                                 rating:
                                                     RatingLevel.kurangSesuai,
                                                 isSelected:
@@ -298,10 +253,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                                       .value,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: itemWidth,
-                                              child: EmojiButton(
+                                              const SizedBox(width: 16),
+                                              EmojiButton(
                                                 rating: RatingLevel.sesuai,
                                                 isSelected:
                                                     _questions[index]
@@ -312,10 +265,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                                   RatingLevel.sesuai.value,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: itemWidth,
-                                              child: EmojiButton(
+                                              const SizedBox(width: 16),
+                                              EmojiButton(
                                                 rating:
                                                     RatingLevel.sangatSesuai,
                                                 isSelected:
@@ -331,8 +282,8 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                                       .value,
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       const SizedBox(height: 40),
