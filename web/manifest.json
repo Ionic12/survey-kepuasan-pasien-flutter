@@ -1,11 +1,11 @@
 {
-    "name": "flutter_survey_app",
-    "short_name": "flutter_survey_app",
+    "name": "Survey Kepuasan Pasien",
+    "short_name": "Survey Pasien",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#00897B",
+    "theme_color": "#00897B",
+    "description": "Aplikasi Survey Kepuasan Pasien Klinik.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
