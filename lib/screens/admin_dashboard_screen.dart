@@ -172,9 +172,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isTablet = screenWidth > 600;
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -190,69 +187,82 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           ),
         ),
         child: SafeArea(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 900),
-              child: Column(
-                children: [
-                  // Header
-                  Padding(
-                    padding: EdgeInsets.all(isTablet ? 30 : 20),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Admin Dashboard',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: isTablet ? 32 : 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Hasil Survey Kepuasan',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: isTablet ? 16 : 14,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: _isLoading ? null : _loadData,
-                          icon: const Icon(Icons.refresh, color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final bool isWide = constraints.maxWidth > 1000;
+              final bool isTablet = constraints.maxWidth > 600;
 
-                  // Content
-                  Expanded(
-                    child: _isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
+              return Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: isWide ? 1200 : 900),
+                  child: Column(
+                    children: [
+                      // Header
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: isTablet ? 30 : 20,
+                          vertical: 20,
+                        ),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () => Navigator.pop(context),
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
                             ),
-                          )
-                        : _responses.isEmpty
-                        ? _buildEmptyState()
-                        : _buildContent(isTablet),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Admin Dashboard',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: isTablet ? 32 : 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Hasil Survey Kepuasan',
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: isTablet ? 16 : 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: _isLoading ? null : _loadData,
+                              icon: const Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Content
+                      Expanded(
+                        child: _isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : _responses.isEmpty
+                            ? _buildEmptyState()
+                            : _buildContent(isTablet, isWide),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -307,15 +317,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
 
-  Widget _buildContent(bool isTablet) {
+  Widget _buildContent(bool isTablet, bool isWide) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(isTablet ? 20 : 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Statistics Cards
-            _buildStatisticsCards(isTablet),
+            _buildStatisticsCards(isTablet, isWide),
 
             const SizedBox(height: 24),
 
@@ -344,7 +354,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.deepPurple.shade700,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -362,7 +372,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
 
-  Widget _buildStatisticsCards(bool isTablet) {
+  Widget _buildStatisticsCards(bool isTablet, bool isWide) {
     final totalResponses = _stats['total_responses'] ?? 0;
     final avgQ1 = _stats['avg_question_1'] ?? 0.0;
     final avgQ2 = _stats['avg_question_2'] ?? 0.0;

@@ -224,105 +224,125 @@ class _SurveyScreenState extends State<SurveyScreen> {
                       },
                       itemCount: _questions.length,
                       itemBuilder: (context, index) {
-                        return Center(
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: isTablet ? 60 : 24,
-                                vertical: 20,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  QuestionCard(
-                                    question: _questions[index].question,
-                                    questionNumber: index + 1,
-                                    totalQuestions: _questions.length,
-                                  ),
-                                  SizedBox(height: isTablet ? 60 : 40),
-                                  LayoutBuilder(
-                                    builder: (context, constraints) {
-                                      double spacing = isTablet ? 30 : 16;
-                                      double itemWidth =
-                                          (constraints.maxWidth -
-                                              (spacing * 3)) /
-                                          2;
+                        return LayoutBuilder(
+                          builder: (context, constraints) {
+                            final bool isTablet = constraints.maxWidth > 500;
+                            final bool isDesktop = constraints.maxWidth > 1000;
 
-                                      return Wrap(
-                                        spacing: spacing,
-                                        runSpacing: spacing,
-                                        alignment: WrapAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: itemWidth,
-                                            child: EmojiButton(
-                                              rating: RatingLevel.tidakSesuai,
-                                              isSelected:
-                                                  _questions[index]
-                                                      .selectedRating ==
-                                                  RatingLevel.tidakSesuai.value,
-                                              onTap: () => _selectRating(
-                                                index,
-                                                RatingLevel.tidakSesuai.value,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: itemWidth,
-                                            child: EmojiButton(
-                                              rating: RatingLevel.kurangSesuai,
-                                              isSelected:
-                                                  _questions[index]
-                                                      .selectedRating ==
-                                                  RatingLevel
-                                                      .kurangSesuai
-                                                      .value,
-                                              onTap: () => _selectRating(
-                                                index,
-                                                RatingLevel.kurangSesuai.value,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: itemWidth,
-                                            child: EmojiButton(
-                                              rating: RatingLevel.sesuai,
-                                              isSelected:
-                                                  _questions[index]
-                                                      .selectedRating ==
-                                                  RatingLevel.sesuai.value,
-                                              onTap: () => _selectRating(
-                                                index,
-                                                RatingLevel.sesuai.value,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: itemWidth,
-                                            child: EmojiButton(
-                                              rating: RatingLevel.sangatSesuai,
-                                              isSelected:
-                                                  _questions[index]
-                                                      .selectedRating ==
+                            // Calculate item width based on screen size
+                            // Mobile: 2 columns, Desktop: 4 columns
+                            final double padding = isTablet ? 80 : 40;
+                            final double availableWidth =
+                                constraints.maxWidth - padding;
+                            final int columns = isDesktop ? 4 : 2;
+                            final double itemWidth =
+                                (availableWidth / columns) - 16;
+
+                            return Center(
+                              child: SingleChildScrollView(
+                                physics: const BouncingScrollPhysics(),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: isTablet ? 40 : 20,
+                                    vertical: 20,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      QuestionCard(
+                                        question: _questions[index].question,
+                                        questionNumber: index + 1,
+                                        totalQuestions: _questions.length,
+                                        isWide: isDesktop,
+                                      ),
+                                      const SizedBox(height: 32),
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxWidth: isDesktop ? 1000 : 700,
+                                        ),
+                                        child: Wrap(
+                                          alignment: WrapAlignment.center,
+                                          spacing: 16,
+                                          runSpacing: 16,
+                                          children: [
+                                            SizedBox(
+                                              width: itemWidth,
+                                              child: EmojiButton(
+                                                rating:
+                                                    RatingLevel.sangatSesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel
+                                                        .sangatSesuai
+                                                        .value,
+                                                onTap: () => _selectRating(
+                                                  index,
                                                   RatingLevel
                                                       .sangatSesuai
                                                       .value,
-                                              onTap: () => _selectRating(
-                                                index,
-                                                RatingLevel.sangatSesuai.value,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      );
-                                    },
+                                            SizedBox(
+                                              width: itemWidth,
+                                              child: EmojiButton(
+                                                rating: RatingLevel.sesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel.sesuai.value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel.sesuai.value,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: itemWidth,
+                                              child: EmojiButton(
+                                                rating:
+                                                    RatingLevel.kurangSesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel
+                                                        .kurangSesuai
+                                                        .value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel
+                                                      .kurangSesuai
+                                                      .value,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: itemWidth,
+                                              child: EmojiButton(
+                                                rating: RatingLevel.tidakSesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel
+                                                        .tidakSesuai
+                                                        .value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel.tidakSesuai.value,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 40),
+                                    ],
                                   ),
-                                  const SizedBox(height: 30),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         );
                       },
                     ),

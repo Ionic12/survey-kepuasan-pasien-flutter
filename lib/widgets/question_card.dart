@@ -5,11 +5,14 @@ class QuestionCard extends StatelessWidget {
   final int questionNumber;
   final int totalQuestions;
 
+  final bool isWide;
+
   const QuestionCard({
     Key? key,
     required this.question,
     required this.questionNumber,
     required this.totalQuestions,
+    this.isWide = false,
   }) : super(key: key);
 
   @override
@@ -19,7 +22,7 @@ class QuestionCard extends StatelessWidget {
 
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 650),
+        constraints: BoxConstraints(maxWidth: isWide ? 900 : 650),
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: isTablet ? 40 : 20),
           padding: EdgeInsets.all(isTablet ? 30 : 20),
