@@ -147,7 +147,12 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 children: [
                   // Header
                   Padding(
-                    padding: EdgeInsets.all(isTablet ? 40 : 20),
+                    padding: EdgeInsets.fromLTRB(
+                      20,
+                      isTablet ? 30 : 15,
+                      20,
+                      isTablet ? 15 : 10,
+                    ),
                     child: Column(
                       children: [
                         Text(
@@ -155,17 +160,17 @@ class _SurveyScreenState extends State<SurveyScreen> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: const Color(0xFF00796B),
-                            fontSize: isTablet ? 36 : 28,
+                            fontSize: isTablet ? 32 : 24,
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 4),
                         Text(
                           'Bantu kami meningkatkan layanan',
                           style: TextStyle(
                             color: Colors.grey.shade700,
-                            fontSize: isTablet ? 18 : 15,
+                            fontSize: isTablet ? 16 : 14,
                           ),
                         ),
                       ],
@@ -197,10 +202,9 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: isTablet ? 40 : 20,
-                                    vertical: 20,
+                                    vertical: 10,
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       QuestionCard(
                                         question: _questions[index].question,
@@ -219,70 +223,84 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                           scrollDirection: Axis.horizontal,
                                           physics:
                                               const BouncingScrollPhysics(),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              EmojiButton(
-                                                rating: RatingLevel.tidakSesuai,
-                                                isSelected:
-                                                    _questions[index]
-                                                        .selectedRating ==
-                                                    RatingLevel
-                                                        .tidakSesuai
-                                                        .value,
-                                                onTap: () => _selectRating(
-                                                  index,
-                                                  RatingLevel.tidakSesuai.value,
-                                                ),
+                                          child: Center(
+                                            child: ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                minWidth:
+                                                    constraints.maxWidth -
+                                                    (isTablet ? 80 : 40),
                                               ),
-                                              const SizedBox(width: 16),
-                                              EmojiButton(
-                                                rating:
-                                                    RatingLevel.kurangSesuai,
-                                                isSelected:
-                                                    _questions[index]
-                                                        .selectedRating ==
-                                                    RatingLevel
-                                                        .kurangSesuai
-                                                        .value,
-                                                onTap: () => _selectRating(
-                                                  index,
-                                                  RatingLevel
-                                                      .kurangSesuai
-                                                      .value,
-                                                ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  EmojiButton(
+                                                    rating:
+                                                        RatingLevel.tidakSesuai,
+                                                    isSelected:
+                                                        _questions[index]
+                                                            .selectedRating ==
+                                                        RatingLevel
+                                                            .tidakSesuai
+                                                            .value,
+                                                    onTap: () => _selectRating(
+                                                      index,
+                                                      RatingLevel
+                                                          .tidakSesuai
+                                                          .value,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 24),
+                                                  EmojiButton(
+                                                    rating: RatingLevel
+                                                        .kurangSesuai,
+                                                    isSelected:
+                                                        _questions[index]
+                                                            .selectedRating ==
+                                                        RatingLevel
+                                                            .kurangSesuai
+                                                            .value,
+                                                    onTap: () => _selectRating(
+                                                      index,
+                                                      RatingLevel
+                                                          .kurangSesuai
+                                                          .value,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 24),
+                                                  EmojiButton(
+                                                    rating: RatingLevel.sesuai,
+                                                    isSelected:
+                                                        _questions[index]
+                                                            .selectedRating ==
+                                                        RatingLevel
+                                                            .sesuai
+                                                            .value,
+                                                    onTap: () => _selectRating(
+                                                      index,
+                                                      RatingLevel.sesuai.value,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 24),
+                                                  EmojiButton(
+                                                    rating: RatingLevel
+                                                        .sangatSesuai,
+                                                    isSelected:
+                                                        _questions[index]
+                                                            .selectedRating ==
+                                                        RatingLevel
+                                                            .sangatSesuai
+                                                            .value,
+                                                    onTap: () => _selectRating(
+                                                      index,
+                                                      RatingLevel
+                                                          .sangatSesuai
+                                                          .value,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              const SizedBox(width: 16),
-                                              EmojiButton(
-                                                rating: RatingLevel.sesuai,
-                                                isSelected:
-                                                    _questions[index]
-                                                        .selectedRating ==
-                                                    RatingLevel.sesuai.value,
-                                                onTap: () => _selectRating(
-                                                  index,
-                                                  RatingLevel.sesuai.value,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 16),
-                                              EmojiButton(
-                                                rating:
-                                                    RatingLevel.sangatSesuai,
-                                                isSelected:
-                                                    _questions[index]
-                                                        .selectedRating ==
-                                                    RatingLevel
-                                                        .sangatSesuai
-                                                        .value,
-                                                onTap: () => _selectRating(
-                                                  index,
-                                                  RatingLevel
-                                                      .sangatSesuai
-                                                      .value,
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ),
                                       ),
