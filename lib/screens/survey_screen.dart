@@ -226,16 +226,16 @@ class _SurveyScreenState extends State<SurveyScreen> {
                       itemBuilder: (context, index) {
                         return LayoutBuilder(
                           builder: (context, constraints) {
-                            final bool isTablet = constraints.maxWidth > 500;
-                            final bool isDesktop = constraints.maxWidth > 1000;
+                            final bool isTablet = constraints.maxWidth > 400;
+                            final bool isDesktop = constraints.maxWidth > 700;
 
-                            // 1 Row (4 Columns) on Desktop, 2x2 on Mobile/Tablet
-                            final double padding = isTablet ? 80 : 40;
+                            // 1 Row (4 Columns) on Desktop (>700), 2x2 on Mobile/Small Tablet
+                            final double padding = isTablet ? 60 : 30;
                             final double availableWidth =
                                 constraints.maxWidth - padding;
                             final int columns = isDesktop ? 4 : 2;
                             final double itemWidth =
-                                (availableWidth / columns) - 16;
+                                (availableWidth / columns) - 12;
 
                             return Center(
                               child: SingleChildScrollView(

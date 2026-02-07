@@ -23,7 +23,7 @@ class MainMenuScreen extends StatelessWidget {
         child: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final bool isWide = constraints.maxWidth > 900;
+              final bool isWide = constraints.maxWidth > 800;
               final bool isTablet = constraints.maxWidth > 600;
 
               return Center(
