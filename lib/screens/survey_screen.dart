@@ -193,18 +193,20 @@ class _SurveyScreenState extends State<SurveyScreen> {
                       itemBuilder: (context, index) {
                         return LayoutBuilder(
                           builder: (context, constraints) {
-                            final bool isTablet = constraints.maxWidth > 450;
+                            final bool isTablet = constraints.maxWidth > 500;
                             final bool isDesktop = constraints.maxWidth > 750;
 
                             return Center(
                               child: SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
-                                child: Padding(
+                                child: Container(
+                                  width: constraints.maxWidth,
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: isTablet ? 40 : 20,
+                                    horizontal: isTablet ? 30 : 20,
                                     vertical: 10,
                                   ),
                                   child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       QuestionCard(
                                         question: _questions[index].question,
@@ -213,94 +215,82 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                         isWide: isDesktop,
                                       ),
                                       const SizedBox(height: 32),
-                                      ConstrainedBox(
-                                        constraints: BoxConstraints(
-                                          maxWidth: isDesktop
-                                              ? 1200
-                                              : double.infinity,
-                                        ),
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          child: Center(
-                                            child: ConstrainedBox(
-                                              constraints: BoxConstraints(
-                                                minWidth:
-                                                    constraints.maxWidth -
-                                                    (isTablet ? 80 : 40),
+                                      // Correctly centered Emoji Row
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        physics: const BouncingScrollPhysics(),
+                                        child: Container(
+                                          // Force the container to be at least as wide as the screen (minus horizontal padding)
+                                          // to allow the Row to center its children correctly.
+                                          constraints: BoxConstraints(
+                                            minWidth:
+                                                constraints.maxWidth -
+                                                (isTablet ? 60 : 40),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              EmojiButton(
+                                                rating: RatingLevel.tidakSesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel
+                                                        .tidakSesuai
+                                                        .value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel.tidakSesuai.value,
+                                                ),
                                               ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  EmojiButton(
-                                                    rating:
-                                                        RatingLevel.tidakSesuai,
-                                                    isSelected:
-                                                        _questions[index]
-                                                            .selectedRating ==
-                                                        RatingLevel
-                                                            .tidakSesuai
-                                                            .value,
-                                                    onTap: () => _selectRating(
-                                                      index,
-                                                      RatingLevel
-                                                          .tidakSesuai
-                                                          .value,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 24),
-                                                  EmojiButton(
-                                                    rating: RatingLevel
-                                                        .kurangSesuai,
-                                                    isSelected:
-                                                        _questions[index]
-                                                            .selectedRating ==
-                                                        RatingLevel
-                                                            .kurangSesuai
-                                                            .value,
-                                                    onTap: () => _selectRating(
-                                                      index,
-                                                      RatingLevel
-                                                          .kurangSesuai
-                                                          .value,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 24),
-                                                  EmojiButton(
-                                                    rating: RatingLevel.sesuai,
-                                                    isSelected:
-                                                        _questions[index]
-                                                            .selectedRating ==
-                                                        RatingLevel
-                                                            .sesuai
-                                                            .value,
-                                                    onTap: () => _selectRating(
-                                                      index,
-                                                      RatingLevel.sesuai.value,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 24),
-                                                  EmojiButton(
-                                                    rating: RatingLevel
-                                                        .sangatSesuai,
-                                                    isSelected:
-                                                        _questions[index]
-                                                            .selectedRating ==
-                                                        RatingLevel
-                                                            .sangatSesuai
-                                                            .value,
-                                                    onTap: () => _selectRating(
-                                                      index,
-                                                      RatingLevel
-                                                          .sangatSesuai
-                                                          .value,
-                                                    ),
-                                                  ),
-                                                ],
+                                              const SizedBox(width: 24),
+                                              EmojiButton(
+                                                rating:
+                                                    RatingLevel.kurangSesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel
+                                                        .kurangSesuai
+                                                        .value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel
+                                                      .kurangSesuai
+                                                      .value,
+                                                ),
                                               ),
-                                            ),
+                                              const SizedBox(width: 24),
+                                              EmojiButton(
+                                                rating: RatingLevel.sesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel.sesuai.value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel.sesuai.value,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 24),
+                                              EmojiButton(
+                                                rating:
+                                                    RatingLevel.sangatSesuai,
+                                                isSelected:
+                                                    _questions[index]
+                                                        .selectedRating ==
+                                                    RatingLevel
+                                                        .sangatSesuai
+                                                        .value,
+                                                onTap: () => _selectRating(
+                                                  index,
+                                                  RatingLevel
+                                                      .sangatSesuai
+                                                      .value,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
